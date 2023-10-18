@@ -155,6 +155,8 @@ const data = [{
     },
 ]
 const examFormElement = document.getElementsByClassName('exam_form')[0];
+const quizfooterElement = document.getElementsByClassName("qiz_footer")[0];
+
 const totalQuestion = data.length;
 let currentQuestionIndex = 0;
 let displayQuestionIndex = 0;
@@ -185,11 +187,13 @@ function getSelectedInput() {
 }
 // console.log(typeof inputs);
 
-function animation() {
-    // getSelectedInput('option');
-    requestAnimationFrame(animation);
+// init function 
+function init() {
+    generateExam();
+    showQuestionList();
+    footerActive();
 }
-// animation()
+init();
 
 function nextEquestion() {
     document.getElementsByClassName("form_wrapper")[0].classList.add('form_hide');
@@ -197,6 +201,7 @@ function nextEquestion() {
         getSelectedInput();
         countScore();
         generateExam();
+        footerActive();
 
     }, 100);
 }
@@ -256,24 +261,46 @@ function generateExam() {
     }, 100);
 
 }
-generateExam();
-
 
 //count sroce 
 function countScore() {
     //count score
+    const footerItemElement = document.querySelectorAll(".footer_item");
 
     if (selectedOptionByUser && selectedOptionByDefault == selectedOptionByUser) {
         correctAnswer++;
         score++;
+        footerItemElement[currentQuestionIndex - 1].classList.add("footer_correct")
     }
     if (selectedOptionByUser && selectedOptionByDefault != selectedOptionByUser) {
         wrongAnser++;
         score - 0.10;
-    }
-    if (!selectedOptionByUser) {
-        unAnswered++;
+        footerItemElement[currentQuestionIndex - 1].classList.add("footer_error")
     }
 
     console.log("correct: " + correctAnswer + " wrong : " + wrongAnser + " skiff : " + unAnswered);
+}
+
+//show question list 
+function showQuestionList() {
+
+    let htmlIndex = "";
+    for (let li = 1; li < 10; li++) {
+        htmlIndex +=
+            `
+        <div class="footer_item">${li}</div>
+        `;
+    }
+    quizfooterElement.innerHTML = htmlIndex;
+}
+
+//function to determided footer item to show current item
+function footerActive() {
+    const footerItemElement = document.querySelectorAll(".footer_item");
+    // const activeItem = parseInt(window.location.hash.split("#").pop());
+    footerItemElement.forEach(fi => {
+        fi.classList.remove('footer_active');
+    });
+
+    footerItemElement[currentQuestionIndex - 1].classList.add("footer_active")
 }
