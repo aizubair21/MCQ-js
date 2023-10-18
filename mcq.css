@@ -1,0 +1,245 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+:root {
+    --mcq-primary: rgb(127, 255, 212);
+    --mcq-light: hsl(153, 92%, 91%);
+    --mcq-dark: hsl(152, 100%, 76%);
+    /* --mcq-light:#fff; */
+    /* --mcq-dark:#000; */
+    --mcq-gray: lightGray;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#quiz_app {
+    width: 600px;
+    height: 600px;
+    box-shadow: 0px 10px 30px 0px rgba(197, 197, 197, 0.575);
+    border-radius: 10px;
+    background-color: #fff;
+    /* background-color: var(--mcq-light); */
+    /* background:linear-gradient(180deg, var(--mcq-light),transparent, transparent); */
+    position: relative;
+    z-index: 1;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 45%;
+        background-color: var(--mcq-light);
+        z-index: -1;
+    }
+
+    .qiz_header {
+        padding: 10px;
+        background-color: var(--mcq-primary);
+        border-radius: 8px;
+    }
+
+    .qiz_body {
+        padding: 15px;
+        /* flex: 1; */
+        height: 320px;
+        margin: 5px 0px;
+        /* border: 1px solid var(--mcq-light); */
+        box-shadow: 0px 0px 10px 0px rgba(197, 197, 197, 0.575);
+        border-radius: 8px;
+        align-self: center;
+        width: 100%;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: start;
+        width: 100%;
+        z-index: 1;
+        background-color: #fff;
+        position: relative;
+
+        .form_active {
+            /* animation: fadeInUp 2s ease-in-out forwards; */
+            top: 0 !important;
+            right: 0 !important;
+            transition: all linear .3s;
+        }
+
+        .form_hide {
+            top: 0 !important;
+            right: 300% !important;
+            ;
+            transition: all linear .3s;
+        }
+
+        .form_wrapper {
+            width: 100%;
+            right: -200%;
+            position: absolute;
+            top: 0;
+            padding: 15px;
+            transition: all linear .3s;
+
+
+
+            .exam_form {
+                .question {
+                    border-bottom: 1px solid var(--mcq-gray);
+                    padding: 5px 0px;
+
+                    .question_label {
+                        font-size: 15px;
+                        text-transform: capitalize;
+                        padding: 5px;
+                        color: var(--mcq-primary);
+                        font-weight: bold;
+                    }
+
+                    .question_input {
+                        width: 100%;
+                        background-color: inherit;
+                        padding: 5px;
+                        font-size: 18px;
+                        text-wrap: wrap;
+                    }
+                }
+
+                .options {
+                    padding: 15px;
+                    margin-top: 15px;
+
+                    .option_items {
+                        margin: 5px 0px;
+                        display: flex;
+                        padding: 6px;
+                        border-radius: 25px;
+                        /* background-color: var(--mcq-light); */
+
+                        .option_label {
+                            /* background-color: var(--mcq-dark); */
+                        }
+
+                        .option_input {
+                            width: 40px;
+                            margin: 0;
+                        }
+                    }
+                }
+
+                .button {
+                    width: 100%;
+
+                    /* margin-top: 25px; */
+                    .sub_btn {
+                        width: 100px;
+                        height: 40px;
+                        border-radius: 25px;
+                        float: right;
+                        background: linear-gradient(-135deg, var(--mcq-dark), var(--mcq-primary));
+                        font-size: 18px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        position: relative;
+                        transition: all linear .3s;
+
+                        &::after {
+                            content: ">";
+                            position: absolute;
+                            top: 50%;
+                            right: 15px;
+                            transform: translateY(-50%);
+                            transition: all linear .3s;
+                            opacity: 0;
+
+                        }
+
+                        &:hover {
+                            /* background: var(--mcq-dark); */
+                            opacity: .8;
+                            padding-right: 10px;
+                            transition: all linear .3s;
+                            ;
+
+                            &::after {
+                                right: 20px;
+                                opacity: 1;
+                                transition: all linear .3s;
+
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+
+
+        .qiz_footer {
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 8px;
+        }
+    }
+
+    #quiz_app .corner_element {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        /* background-color: white;; */
+        /* border: 1px solid black; */
+        overflow: hidden;
+        border-radius: 10px;
+
+        .corner_item {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(90deg, transparent, var(--mcq-primary), transparent);
+            border-radius: 50%;
+            filter: blur(80px);
+
+            &:nth-child(1) {
+                top: -100px;
+                left: -100px;
+            }
+
+            &:nth-child(2) {
+                top: -100px;
+                right: -100px;
+                ;
+            }
+
+            &:nth-child(3) {
+                bottom: -100px;
+                left: -100px;
+            }
+
+            &:nth-child(4) {
+                bottom: -100px;
+                right: -100px;
+            }
+        }
+    }
+}
