@@ -192,6 +192,7 @@ function init() {
     generateExam();
     showQuestionList();
     footerActive();
+    // disabledOtherOption();
 }
 init();
 
@@ -202,7 +203,7 @@ function nextEquestion() {
         countScore();
         generateExam();
         footerActive();
-
+        disabledOtherOption();
     }, 100);
 }
 
@@ -226,6 +227,7 @@ function generateExam() {
             <div class="question">
                 <div class="question_label">question - ${currentQuestionIndex}</div>
                 <div class="question_input">${getQuestionData.question}</div>
+                <img class="question_img" src="img/icons8-pen-100.png">
             </div>
             <hr style="background-color: gray;">
 
@@ -272,7 +274,7 @@ function countScore() {
         score++;
         footerItemElement[currentQuestionIndex - 1].classList.add("footer_correct")
     }
-    if (selectedOptionByUser && selectedOptionByDefault != selectedOptionByUser) {
+    if (selectedOptionByUser != "" && selectedOptionByDefault != selectedOptionByUser) {
         wrongAnser++;
         score - 0.10;
         footerItemElement[currentQuestionIndex - 1].classList.add("footer_error")
@@ -304,3 +306,24 @@ function footerActive() {
 
     footerItemElement[currentQuestionIndex - 1].classList.add("footer_active")
 }
+
+//function disable another option if one selected 
+function disabledOtherOption() {
+    const allOptions = document.querySelectorAll('.option_input');
+    allOptions.forEach((op, index) => {
+        op.addEventListener('change', () => {
+            console.log("clicked on optin");
+            allOptions.forEach((oP, iNdex) => {
+                oP.checked = false;
+                oP.disabled = true;
+            })
+            op.disabled = false;
+            op.checked = true;
+            setTimeout(() => {
+                // nextEquestion();
+            }, 100);
+        })
+    })
+
+}
+disabledOtherOption();

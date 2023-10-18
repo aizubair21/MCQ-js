@@ -23,48 +23,26 @@
         <!-- app element  -->
         <div class="qiz_header"> header</div>
         <div class="qiz_body">
-         
-                <input type="hidden" name="default" id="default" value="a">
-                <input type="hidden" name="current_index" id="current_index" value="0">
-                <div class="question">
-                    <div class="question_label">question - 1</div>
-                    <div class="question_input">Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum, officia?
-                    </div>
-                </div>
-                <hr style="background-color: gray;">
+            <div class="form_wrapper">
+                <form action="#" class="exam_form" style="width:100%">
+                    
+                    <div class="form_content">
 
-                <div class="options">
-                    <div class="option_items">
-                        <input class="option_input" type="radio" name="option" value="a" id="option_a">
-                        <label class="option_label" for="option_a">Option A</label>
                     </div>
-                    <div class="option_items">
-                        <input class="option_input" type="radio" name="option" value="b" id="option_b">
-                        <label class="option_label" for="option_b">Option A</label>
-                    </div>
-                    <div class="option_items">
-                        <input class="option_input" type="radio" name="option" value="c" id="option_c">
-                        <label class="option_label" for="option_c">Option A</label>
-                    </div>
-                    <div class="option_items">
-                        <input class="option_input" type="radio" name="option" value="d" id="option_d">
-                        <label class="option_label" for="option_d">Option A</label>
-                    </div>
-                </div>
 
-                <div class="button">
-                    <button type="submit" class="sub_btn">Next</button>
-                </div>
-            </form> -->
-
+                    <div class="button">
+                        <button type="button" onclick="nextEquestion()" class="sub_btn">Next</button>
+                    </div>
+                </form>
+            </div>
         </div>
         <div class="qiz_footer">
-           
+
         </div>
     </div>
 
     <script src="mcq.js"></script>
 </body>
 
-</html>   
+</html>
 <!-- <form action="#" class="exam_form" style="width:100%">
