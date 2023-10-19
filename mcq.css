@@ -25,7 +25,7 @@ body {
 
 #quiz_app {
     width: 600px;
-    height: 600px;
+    height: 95vh;
     box-shadow: 0px 10px 30px 0px rgba(197, 197, 197, 0.575);
     border-radius: 10px;
     background-color: #fff;
@@ -48,34 +48,122 @@ body {
         left: 0;
         width: 100%;
         height: 45%;
-        background: linear-gradient(0deg, #fff, var(--mcq-light));
+        /* background: linear-gradient(0deg, #fff, var(--mcq-light)); */
         z-index: -1;
     }
 
     .qiz_header {
-        padding: 10px;
-        background-color: var(--mcq-primary);
+        /* padding: 10px; */
+        /* background-color: var(--mcq-primary); */
         border-radius: 8px;
+        flex-grow: 1;
+        text-align: center;
+        width: 100%;
+
+        .alert {
+            font-size: 10px;
+            margin-bottom: 2px;
+        }
+
+        .h_top {
+            display: inline-flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: var(--mcq-light);
+            padding: 5px;
+
+            .total_time {
+                padding: 4px 8px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .group {
+                font-size: 13px;
+                background-color: var(--mcq-dark);
+                color: #fff;
+                display: inline-block;
+                padding: 4px;
+                display: flex;
+                align-items: center;
+            }
+
+        }
+
+        .institute {
+            font-size: 22px;
+            font-weight: 600;
+            text-transform: capitalize;
+            padding: 4px;
+
+
+        }
+
+        .timeAndMark {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4px;
+            margin-bottom: 20px;
+
+            .total_mark {
+                background-color: var(--mcq-dark);
+                padding: 8px;
+            }
+
+            .total_time_left {
+                padding: 8px;
+                font-size: 18px;
+                /* border: 1px solid var(--mcq-dark); */
+                border-radius: 50px;
+                /* background: linear-gradient(0deg, white, var(--mcq-dark), white); */
+                display: flex;
+                align-items: center;
+
+                .tm_left {
+                    margin: 3px 0px;
+                    background: #fff;
+                    width: 50px;
+                    font-size: 25px;
+                    border-radius: 50%;
+                    height: 50px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 0px 3px;
+                    border: 1px solid var(--mcq-dark);
+                    position: relative;
+                    background-color:  var(--mcq-dark);
+
+                    .tm_left_sec {
+                        position: absolute;
+                        bottom: -10px;
+                        left: 50%;
+                        transform:translateX(-50%);
+                        font-size: 13px;
+                        z-index: 1;
+                        /* border-radius: 50%; */
+                        padding: 2px;
+                        width: 25px;
+                        height: 20px;
+                        background-color: white;
+                        border: 1px solid var(--mcq-dark);
+                    }
+                }
+            }
+
+        }
     }
 
     .qiz_body {
         padding: 15px;
-        /* flex: 1; */
-        height: 330px;
+        height: inherit;
         margin: 5px 0px;
-        /* border: 1px solid var(--mcq-light); */
-        box-shadow: 0px 0px 10px 0px rgba(197, 197, 197, 0.575);
         border-radius: 8px;
-        align-self: center;
-        width: 100%;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: start;
         width: 100%;
         z-index: 1;
-        background-color: #fff;
+        background-color: var(--mcq-light);
         position: relative;
 
         .form_active {
@@ -99,6 +187,11 @@ body {
             top: 0;
             padding: 15px;
             transition: all linear .3s;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            height: 100%;
+
 
             .question_label {
                 font-size: 15px;
@@ -110,11 +203,13 @@ body {
                 background-color: var(--mcq-dark);
                 font-weight: bold;
             }
+
             .exam_form {
                 .question {
                     border-bottom: 1px solid var(--mcq-gray);
                     padding: 5px 0px;
                     position: relative;
+
                     .question_input {
                         width: 100%;
                         background-color: inherit;
@@ -123,8 +218,9 @@ body {
                         font-weight: 600;
                         text-wrap: wrap;
                     }
-                    .question_img{
-                        position:absolute;
+
+                    .question_img {
+                        position: absolute;
                         top: 50%;
                         right: 0;
                         transform: translateY(-50%);
@@ -154,11 +250,37 @@ body {
                             width: 40px;
                             margin: 0;
                         }
+
                     }
                 }
 
                 .button {
                     width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    /* overflow: hidden; */
+                    z-index: 1;
+
+                    .question_counter {
+                        padding: 5px;
+                        font-weight: 600;
+                        position: relative;
+                        z-index: 1;
+
+                        &::after {
+                            content: "";
+                            position: absolute;
+                            top: 50%;
+                            right: -20px;
+                            border-radius: 12px;
+                            transform: translateY(-50%);
+                            height: 30px;
+                            width: 300px;
+                            background-color: #fff;
+                            z-index: -1;
+                        }
+                    }
 
                     /* margin-top: 25px; */
                     .sub_btn {
@@ -166,7 +288,8 @@ body {
                         height: 40px;
                         border-radius: 25px;
                         float: right;
-                        background: linear-gradient(-135deg, var(--mcq-dark), var(--mcq-primary));
+                        /* background: linear-gradient(-135deg, var(--mcq-dark), var(--mcq-primary)); */
+                        background-color: #fff;
                         font-size: 18px;
                         font-weight: 600;
                         cursor: pointer;
@@ -185,8 +308,8 @@ body {
                         }
 
                         &:hover {
-                            /* background: var(--mcq-dark); */
-                            opacity: .8;
+                            background: var(--mcq-dark);
+                            /* opacity: .8; */
                             padding-right: 10px;
                             transition: all linear .3s;
                             ;
@@ -205,6 +328,31 @@ body {
 
         }
 
+        .exam_finished_box {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            width: 100%;
+            height: 100%;
+
+            .fns_btn {
+                padding: 15px 25px;
+                background-color: var(--mcq-dark);
+                color: #000;
+                font-size: 23px;
+                font-weight: 600;
+                cursor: pointer;
+                border-radius: 12px;
+            }
+
+            .info_text {
+                font-size: 14px;
+                padding: 8px 0px;
+                color: #000;
+            }
+        }
 
     }
 
@@ -298,4 +446,14 @@ body {
             }
         }
     }
+}
+
+
+input[type='radio'] {
+    /* display: none; */
+}
+
+
+input[type='radio']:checked {
+    background-color: #ffa500;
 }

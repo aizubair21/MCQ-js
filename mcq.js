@@ -156,10 +156,15 @@ const data = [{
 ]
 const examFormElement = document.getElementsByClassName('exam_form')[0];
 const quizfooterElement = document.getElementsByClassName("qiz_footer")[0];
+const totalMarkElelment = document.getElementsByClassName("total_mark")[0];
+const totalTimeElement = document.getElementsByClassName("total_time")[0];
+const totalLeftTime = document.getElementsByClassName('tm_left')[0];
 
 const totalQuestion = data.length;
 let currentQuestionIndex = 0;
 let displayQuestionIndex = 0;
+let questionLimitation = 10;
+let totalTime = 60;
 
 let score = 0;
 let correctAnswer = 0;
@@ -189,10 +194,11 @@ function getSelectedInput() {
 
 // init function 
 function init() {
-    generateExam();
     showQuestionList();
+    generateExam();
     footerActive();
-    // disabledOtherOption();
+    disabledOtherOption();
+    setupExam();
 }
 init();
 
@@ -207,60 +213,90 @@ function nextEquestion() {
     }, 100);
 }
 
+function setupExam() {
+
+
+    totalMarkElelment.innerHTML = ` Mark:  ${questionLimitation}`;
+    // totalMarkElelment.innerHTML = totalTime + "Min";
+    totalTimeElement.innerHTML =
+        `
+    <img src="img/clock.png" style="padding-right:5px">
+    ${totalTime} Min
+    `;
+
+}
 
 //generate exam with data 
 function generateExam() {
 
     const getQuestionData = data[currentQuestionIndex];
-    if (currentQuestionIndex > totalQuestion) {
-        currentQuestionIndex = 0;
-    }
-    currentQuestionIndex++;
+    // if (currentQuestionIndex > totalQuestion) {
+    //     currentQuestionIndex = 0;
+    // }
+
     const questionDisplay = document.getElementsByClassName("qiz_body")[0];
-    selectedOptionByDefault = getQuestionData.answer;
-    // console.log(getQuestionData);
-    let htmlIndex =
-        `
-        <div class="form_wrapper">
-        <form action="#" class="exam_form" style="width:100%">
-            <input type="hidden" name="current_index" id="current_index" value="${currentQuestionIndex}">
-            <div class="question">
-                <div class="question_label">question - ${currentQuestionIndex}</div>
-                <div class="question_input">${getQuestionData.question}</div>
-                <img class="question_img" src="img/icons8-pen-100.png">
-            </div>
-            <hr style="background-color: gray;">
+    if (currentQuestionIndex < questionLimitation) {
 
-            <div class="options">
-                <div class="option_items">
-                    <input class="option_input" type="radio" name="option" value="${getQuestionData.options[0]}" id="option_a">
-                    <label class="option_label" for="option_a">${getQuestionData.options[0]}</label>
+        currentQuestionIndex++;
+        selectedOptionByDefault = getQuestionData.answer;
+        // console.log(getQuestionData);
+        let htmlIndex =
+            `
+            <div class="form_wrapper">
+            <form action="#" class="exam_form" style="width:100%">
+                <input type="hidden" name="current_index" id="current_index" value="${currentQuestionIndex}">
+                <div class="question">
+                    <div class="question_label">question - ${currentQuestionIndex}</div>
+                    <div class="question_input">${getQuestionData.question}</div>
+                    <img class="question_img" src="img/icons8-pen-100.png">
                 </div>
-                <div class="option_items">
-                    <input class="option_input" type="radio" name="option" value="${getQuestionData.options[1]}" id="option_b">
-                    <label class="option_label" for="option_b">${getQuestionData.options[1]}</label>
+                <hr style="background-color: gray;">
+    
+                <div class="options">
+                    <div class="option_items">
+                        <input class="option_input" type="radio" name="option" value="${getQuestionData.options[0]}" id="option_a">
+                        <label class="option_label" for="option_a">${getQuestionData.options[0]}</label>
+                    </div>
+                    <div class="option_items">
+                        <input class="option_input" type="radio" name="option" value="${getQuestionData.options[1]}" id="option_b">
+                        <label class="option_label" for="option_b">${getQuestionData.options[1]}</label>
+                    </div>
+                    <div class="option_items">
+                        <input class="option_input" type="radio" name="option" value="${getQuestionData.options[2]}" id="option_c">
+                        <label class="option_label" for="option_c">${getQuestionData.options[2]}</label>
+                    </div>
+                    <div class="option_items">
+                        <input class="option_input" type="radio" name="option" value="${getQuestionData.options[3]}" id="option_d">
+                        <label class="option_label" for="option_d">${getQuestionData.options[3]}</label>
+                    </div>
                 </div>
-                <div class="option_items">
-                    <input class="option_input" type="radio" name="option" value="${getQuestionData.options[2]}" id="option_c">
-                    <label class="option_label" for="option_c">${getQuestionData.options[2]}</label>
+    
+                <div class="button">
+                    <div class="question_counter">${questionLimitation - currentQuestionIndex} Left</div>
+                    <button type="button" onclick="nextEquestion()" class="sub_btn">${currentQuestionIndex == questionLimitation ? "Submit" : "Next"}</button>
                 </div>
-                <div class="option_items">
-                    <input class="option_input" type="radio" name="option" value="${getQuestionData.options[3]}" id="option_d">
-                    <label class="option_label" for="option_d">${getQuestionData.options[3]}</label>
-                </div>
+             </form>
+             </div>
+            `;
+        questionDisplay.innerHTML = htmlIndex;
+        setTimeout(() => {
+            document.getElementsByClassName("form_wrapper")[0].classList.add('form_active');
+        }, 100);
+    } else {
+        console.log("no more question !");
+        htmlIndex =
+            `
+        <div class="exam_finished_box">
+            <button class="fns_btn">Show Result</button>
+            <div class="info_text">
+                *To start new exam refresh your webpage. <span style="cursor:pointer; padding:5px; margin-left:5px; border:1px solid white" onclick="window.location.reload()">New</span>
             </div>
+        </div>
 
-            <div class="button">
-                <button type="button" onclick="nextEquestion()" class="sub_btn">Next</button>
-            </div>
-         </form>
-         </div>
         `;
-    questionDisplay.innerHTML = htmlIndex;
+        questionDisplay.innerHTML = htmlIndex;
+    }
 
-    setTimeout(() => {
-        document.getElementsByClassName("form_wrapper")[0].classList.add('form_active');
-    }, 100);
 
 }
 
@@ -287,7 +323,7 @@ function countScore() {
 function showQuestionList() {
 
     let htmlIndex = "";
-    for (let li = 1; li < 10; li++) {
+    for (let li = 1; li < questionLimitation + 1; li++) {
         htmlIndex +=
             `
         <div class="footer_item">${li}</div>
@@ -298,13 +334,16 @@ function showQuestionList() {
 
 //function to determided footer item to show current item
 function footerActive() {
-    const footerItemElement = document.querySelectorAll(".footer_item");
-    // const activeItem = parseInt(window.location.hash.split("#").pop());
-    footerItemElement.forEach(fi => {
-        fi.classList.remove('footer_active');
-    });
+    if (questionLimitation) {
 
-    footerItemElement[currentQuestionIndex - 1].classList.add("footer_active")
+        const footerItemElement = document.querySelectorAll(".footer_item");
+        // const activeItem = parseInt(window.location.hash.split("#").pop());
+        footerItemElement.forEach(fi => {
+            fi.classList.remove('footer_active');
+        });
+        footerItemElement[currentQuestionIndex - 1].classList.add("footer_active")
+    }
+
 }
 
 //function disable another option if one selected 
@@ -326,4 +365,36 @@ function disabledOtherOption() {
     })
 
 }
-disabledOtherOption();
+
+//time left funtion
+function timeLeft() {
+    secound = 10;
+    totalTime--;
+    let lti = setInterval(() => {
+        secound--;
+        if (secound <= 0) {
+            secound = 10;
+            totalTime--;
+            clearInterval(lti);
+            // clearInterval;
+            // alert(`Time is up!`);
+            // window.location.href = `./index.html`;
+        }
+        if (secound < 10) {
+            secound = "0" + secound;
+        }
+        if (totalTime <= 0) {
+            clearInterval(lti);
+            secound = 0;
+            totalTime = 0;
+            document.getElementsByClassName("tm_left_min")["0"].style.backgroundColor = 'red';
+        }
+        if (totalTime < 10) {
+            totalTime = "0" + totalTime;
+        }
+        document.getElementsByClassName('tm_left_min')[0].innerHTML = totalTime;
+        document.getElementsByClassName("tm_left_sec")[0].innerHTML = secound;
+        console.log(totalTime + " - " + secound);
+    }, 1000)
+}
+timeLeft();
