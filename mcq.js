@@ -163,8 +163,9 @@ const totalLeftTime = document.getElementsByClassName('tm_left')[0];
 const totalQuestion = data.length;
 let currentQuestionIndex = 0;
 let displayQuestionIndex = 0;
-let questionLimitation = 10;
-let totalTime = 60;
+let questionLimitation = 3;
+let totalTime = 1;
+let secound = 10;
 
 let score = 0;
 let correctAnswer = 0;
@@ -273,7 +274,7 @@ function generateExam() {
     
                 <div class="button">
                     <div class="question_counter">${questionLimitation - currentQuestionIndex} Left</div>
-                    <button type="button" onclick="nextEquestion()" class="sub_btn">${currentQuestionIndex == questionLimitation ? "Submit" : "Next"}</button>
+                    <button type="button" onclick="nextEquestion()" class="sub_btn">${currentQuestionIndex == questionLimitation ? "Finish" : "Next"}</button>
                 </div>
              </form>
              </div>
@@ -283,18 +284,7 @@ function generateExam() {
             document.getElementsByClassName("form_wrapper")[0].classList.add('form_active');
         }, 100);
     } else {
-        console.log("no more question !");
-        htmlIndex =
-            `
-        <div class="exam_finished_box">
-            <button class="fns_btn">Show Result</button>
-            <div class="info_text">
-                *To start new exam refresh your webpage. <span style="cursor:pointer; padding:5px; margin-left:5px; border:1px solid white" onclick="window.location.reload()">New</span>
-            </div>
-        </div>
-
-        `;
-        questionDisplay.innerHTML = htmlIndex;
+        submitExam();
     }
 
 
@@ -321,20 +311,22 @@ function countScore() {
 
 //show question list 
 function showQuestionList() {
+    if (questionLimitation && totalLeftTime && secound) {
 
-    let htmlIndex = "";
-    for (let li = 1; li < questionLimitation + 1; li++) {
-        htmlIndex +=
-            `
-        <div class="footer_item">${li}</div>
-        `;
+        let htmlIndex = "";
+        for (let li = 1; li < questionLimitation + 1; li++) {
+            htmlIndex +=
+                `
+            <div class="footer_item">${li}</div>
+            `;
+        }
+        quizfooterElement.innerHTML = htmlIndex;
     }
-    quizfooterElement.innerHTML = htmlIndex;
 }
 
 //function to determided footer item to show current item
 function footerActive() {
-    if (questionLimitation) {
+    if (questionLimitation && totalTime && secound) {
 
         const footerItemElement = document.querySelectorAll(".footer_item");
         // const activeItem = parseInt(window.location.hash.split("#").pop());
@@ -342,59 +334,91 @@ function footerActive() {
             fi.classList.remove('footer_active');
         });
         footerItemElement[currentQuestionIndex - 1].classList.add("footer_active")
+
     }
 
 }
 
 //function disable another option if one selected 
 function disabledOtherOption() {
-    const allOptions = document.querySelectorAll('.option_input');
-    allOptions.forEach((op, index) => {
-        op.addEventListener('change', () => {
-            console.log("clicked on optin");
-            allOptions.forEach((oP, iNdex) => {
-                oP.checked = false;
-                oP.disabled = true;
+    if (questionLimitation && totalTime && secound) {
+
+        const allOptions = document.querySelectorAll('.option_input');
+        allOptions.forEach((op, index) => {
+            op.addEventListener('change', () => {
+                console.log("clicked on optin");
+                allOptions.forEach((oP, iNdex) => {
+                    oP.checked = false;
+                    oP.disabled = true;
+                })
+                op.disabled = false;
+                op.checked = true;
+                setTimeout(() => {
+                    // nextEquestion();
+                }, 100);
             })
-            op.disabled = false;
-            op.checked = true;
-            setTimeout(() => {
-                // nextEquestion();
-            }, 100);
         })
-    })
+    }
 
 }
 
 //time left funtion
 function timeLeft() {
-    secound = 10;
+    // secound = 10;
     totalTime--;
     let lti = setInterval(() => {
         secound--;
         if (secound <= 0) {
             secound = 10;
             totalTime--;
-            clearInterval(lti);
+            // clearInterval(lti);
             // clearInterval;
             // alert(`Time is up!`);
             // window.location.href = `./index.html`;
+            if (totalTime < 1) {
+                secound = 0;
+                clearInterval(lti);
+                submitExam();
+                document.getElementsByClassName('tm_left')[0].style.backgroundColor = "red";
+            }
         }
         if (secound < 10) {
             secound = "0" + secound;
         }
         if (totalTime <= 0) {
-            clearInterval(lti);
-            secound = 0;
             totalTime = 0;
-            document.getElementsByClassName("tm_left_min")["0"].style.backgroundColor = 'red';
-        }
-        if (totalTime < 10) {
-            totalTime = "0" + totalTime;
         }
         document.getElementsByClassName('tm_left_min')[0].innerHTML = totalTime;
         document.getElementsByClassName("tm_left_sec")[0].innerHTML = secound;
         console.log(totalTime + " - " + secound);
     }, 1000)
+
+    if (totalTime < 10) {
+        totalTime = "0" + totalTime;
+    }
 }
 timeLeft();
+
+
+//submit exam 
+function submitExam() {
+    // init();
+    // showQuestionList();
+    // footerActive();
+    // disabledOtherOption();
+    // footerItemElement.style.display = 'none';
+
+    const questionDisplay = document.getElementsByClassName("qiz_body")[0];
+    console.log("no more question !");
+    htmlIndex =
+        `
+    <div class="exam_finished_box">
+        <button class="fns_btn">Show Result</button>
+        <div class="info_text">
+            *To start new exam refresh your webpage. <span style="cursor:pointer; padding:5px; margin-left:5px; border:1px solid white" onclick="window.location.reload()">New</span>
+        </div>
+    </div>
+
+    `;
+    questionDisplay.innerHTML = htmlIndex;
+}
