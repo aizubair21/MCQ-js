@@ -36,7 +36,7 @@
                     </div>
 
                     <div class="total_time">
-                        60 min
+
                     </div>
                 </div>
 
@@ -46,19 +46,19 @@
 
                         <div class="left">
                             <div class="total_mark"></div>
-
-                            <div class="start_time">From - 10:10</div>
-                            <div class="end_time">To - 11:10</div>
+                            <div class="start_time"></div>
+                            <div class="end_time"></div>
 
                         </div>
                         <!-- <p class="span">All Question Are Equal Value</p> -->
                     </div>
 
                     <div class="total_time_left">
-                        Time Left
-                        <div class="tm_left">
 
-                            <div class="tm_left_min"></div> <span class="min_sec_devider">:</span>
+                        <div class="tm_left">
+                            <!-- <img style="padding:5px; border-radius:50px;" src="img/clock.png"> -->
+                            <div class="tm_left_min"></div>
+                            <span class="min_sec_devider">:</span>
                             <div class="tm_left_sec"></div>
 
                         </div>
@@ -67,26 +67,145 @@
 
             </div>
         </div>
-        <div class="qiz_body">
-            <div class="form_wrapper">
-                <form action="#" class="exam_form" style="width:100%">
 
-                    <div class="form_content">
+        <div class="exam_layout ">
+            <!-- header  -->
+            <div class="qiz_body">
+                <div class="form_wrapper">
 
-                    </div>
-
-                    <div class="button">
-                        <button type="button" onclick="nextEquestion()" class="sub_btn">Next</button>
-                    </div>
-                </form>
+                </div>
             </div>
-        </div>
-        <div class="qiz_footer">
 
+            <!-- body. main part  -->
+            <div class="qiz_footer"> </div>
         </div>
-    </div>
 
-    <script src="mcq.js"></script>
+        <div id="setup_exam" class="setup_exam_activ">
+
+            <div class="sx_header">
+                <div class="title ">
+                    <div class="h5">
+                        Examination Setup
+                    </div>
+                    <p class="p">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, inventore.
+                    </p>
+                </div>
+                <!-- <button class="sx_close_btn">&times</button> -->
+            </div>
+            <hr>
+
+            <div class="sx_body">
+                <div>
+                    <div class="setting_div target_question">
+                        <h4> Question Count : </h4>
+                        <input type="number" id="target_question_input" placeholder="Question target..." class="input"
+                            value="10">
+                        <div class="form_text">
+                            How many question do you want exam
+                        </div>
+                    </div>
+
+                    <div class="setting_div">
+                        <h4>
+                            Exam Duration :
+                        </h4>
+                        <input type="number" placeholder="How minute want to take exam" id="examDuration" class="input"
+                            value="10">
+                        <div class="form_text">
+                            *Given time countable as Minutes
+                        </div>
+                    </div>
+
+                    <div class="setting_div setting_marks">
+                        <div class="pass_mark">
+                            <h4>
+
+                                Pass Mark :
+                            </h4>
+                            <input type="number" placeholder="Pass mark in percentage" id="passMark" class="input"
+                                value="6">
+                            <div class="form_text">
+                                *Marks will be given if the student get marks more than this value he/she pass the exam
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="chose_layout">
+                    <h3>Chose Your Layouts </h3>
+                    <br>
+                    <div class="cl_body">
+                        <div class="cl_left">
+                            <div class="cl_item">
+                                <h4 class="h4">Default View </h4>
+                                <p class="p">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus,
+                                    facilis.
+                                </p>
+                            </div>
+                            <div class="cl_item">
+                                <h4 class="h4">Default View </h4>
+                                <p class="p">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus,
+                                    facilis.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="cl_right">
+                            <img class="cl_right_item" src="" alt="lorem ipsum color">
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="setting">
+
+                    <div class="settings">
+                        <div>
+                            <input type="checkbox" name="" id="negative_mark">
+                        </div>
+
+                        <div>
+                            <label for="negative_mark">Negative Mark</label>
+                            <div class="form_text">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, iure!
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings">
+                        <div>
+                            <input type="checkbox" name="" id="selectTopNext">
+                        </div>
+                        <div>
+                            <label for="selectTopNext">Option to Next :</label>
+                            <div class="form_text">
+                                By selecting question option question immediatly submit and get next question.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings">
+                        <div>
+                            <input type="checkbox" id="optionDisabled">
+                        </div>
+                        <div>
+                            <label for="optionDisabled">Disable Option</label>
+                            <div class="form_text">
+                                When select one option. another option disabled. If you select one option you can't
+                                change your choise.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <button onclick="startExam()" class="start_exam_button">Start Exam</button>
+                <!-- sx body end  -->
+            </div>
+
+            <!-- setup exam end  -->
+        </div>
+
+        <script src="mcq.js"></script>
 </body>
 
 </html>

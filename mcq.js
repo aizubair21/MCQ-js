@@ -159,13 +159,27 @@ const quizfooterElement = document.getElementsByClassName("qiz_footer")[0];
 const totalMarkElelment = document.getElementsByClassName("total_mark")[0];
 const totalTimeElement = document.getElementsByClassName("total_time")[0];
 const totalLeftTime = document.getElementsByClassName('tm_left')[0];
+const examSetupElement = document.getElementById('setup_exam');
+const targetQuestionInputElement = document.getElementById('target_question_input');
+const examDurationElement = document.getElementById('examDuration');
+const examPassMark = document.getElementById('passMark');
+const negativeMarkInput = document.getElementById('negative_mark');
+const selectToNextInput = document.getElementById('selectTopNext');
+const disabledOptinInput = document.getElementById("optionDisabled");
+
+
 
 const totalQuestion = data.length;
 let currentQuestionIndex = 0;
 let displayQuestionIndex = 0;
-let questionLimitation = 3;
-let totalTime = 1;
-let secound = 10;
+let questionLimitation = 25;
+let totalTime = 10;
+let secound = 60;
+let isExamStarted = false;
+let isNestQuestionComesBySelectingOption = false;
+let disabledOtherOptionWhenOneOptionIsSelected = false;
+let negativeMarking = false;
+let passMark = 0;
 
 let score = 0;
 let correctAnswer = 0;
@@ -199,10 +213,12 @@ function init() {
     generateExam();
     footerActive();
     disabledOtherOption();
-    setupExam();
+    timeLeft();
 }
-init();
+// init();
+// setupExam();
 
+// funciton for next question 
 function nextEquestion() {
     document.getElementsByClassName("form_wrapper")[0].classList.add('form_hide');
     setTimeout(() => {
@@ -214,18 +230,6 @@ function nextEquestion() {
     }, 100);
 }
 
-function setupExam() {
-
-
-    totalMarkElelment.innerHTML = ` Mark:  ${questionLimitation}`;
-    // totalMarkElelment.innerHTML = totalTime + "Min";
-    totalTimeElement.innerHTML =
-        `
-    <img src="img/clock.png" style="padding-right:5px">
-    ${totalTime} Min
-    `;
-
-}
 
 //generate exam with data 
 function generateExam() {
@@ -236,7 +240,9 @@ function generateExam() {
     // }
 
     const questionDisplay = document.getElementsByClassName("qiz_body")[0];
-    if (currentQuestionIndex < questionLimitation) {
+    console.log("ci : " + typeof currentQuestionIndex + " qi : " + typeof questionLimitation);
+
+    if (parseInt(currentQuestionIndex) < parseInt(questionLimitation)) {
 
         currentQuestionIndex++;
         selectedOptionByDefault = getQuestionData.answer;
@@ -284,6 +290,7 @@ function generateExam() {
             document.getElementsByClassName("form_wrapper")[0].classList.add('form_active');
         }, 100);
     } else {
+        console.log(' from create exam else block');
         submitExam();
     }
 
@@ -314,14 +321,17 @@ function showQuestionList() {
     if (questionLimitation && totalLeftTime && secound) {
 
         let htmlIndex = "";
-        for (let li = 1; li < questionLimitation + 1; li++) {
+        let lix = 1;
+        for (let li = 0; li < questionLimitation; li++) {
             htmlIndex +=
                 `
-            <div class="footer_item">${li}</div>
+            <div class="footer_item">${lix}</div>
             `;
+            lix++;
         }
         quizfooterElement.innerHTML = htmlIndex;
     }
+    // console.log(questionLimitation); 
 }
 
 //function to determided footer item to show current item
@@ -341,35 +351,50 @@ function footerActive() {
 
 //function disable another option if one selected 
 function disabledOtherOption() {
-    if (questionLimitation && totalTime && secound) {
+    const allOptions = document.querySelectorAll('.option_input');
 
-        const allOptions = document.querySelectorAll('.option_input');
-        allOptions.forEach((op, index) => {
-            op.addEventListener('change', () => {
+
+    allOptions.forEach((op, index) => {
+        op.addEventListener('change', () => {
+            if (disabledOtherOptionWhenOneOptionIsSelected && questionLimitation && totalTime && secound) {
                 console.log("clicked on optin");
+
                 allOptions.forEach((oP, iNdex) => {
                     oP.checked = false;
                     oP.disabled = true;
                 })
                 op.disabled = false;
                 op.checked = true;
-                setTimeout(() => {
-                    // nextEquestion();
-                }, 100);
-            })
+                // setTimeout(() => {
+
+                // }, 100);
+            }
+
+            if (isNestQuestionComesBySelectingOption) {
+                nextEquestion();
+            }
         })
-    }
+
+    })
+
+    // function to load event listener when select a option and get next question;
+    // allOptions.forEach((oP, iNdex) => {
+    // })
 
 }
+
 
 //time left funtion
 function timeLeft() {
     // secound = 10;
     totalTime--;
+    if (totalTime < 10) {
+        totalTime = "0" + totalTime;
+    }
     let lti = setInterval(() => {
         secound--;
         if (secound <= 0) {
-            secound = 10;
+            secound = 59;
             totalTime--;
             // clearInterval(lti);
             // clearInterval;
@@ -379,6 +404,7 @@ function timeLeft() {
                 secound = 0;
                 clearInterval(lti);
                 submitExam();
+                console.log("from timing funciton");
                 document.getElementsByClassName('tm_left')[0].style.backgroundColor = "red";
             }
         }
@@ -388,16 +414,13 @@ function timeLeft() {
         if (totalTime <= 0) {
             totalTime = 0;
         }
+        // document.getElementsByClassName("tm_left")[0].prepend = `<img style="padding:5px; border-radius:50px;" sec="img/clock.png>`;
         document.getElementsByClassName('tm_left_min')[0].innerHTML = totalTime;
         document.getElementsByClassName("tm_left_sec")[0].innerHTML = secound;
-        console.log(totalTime + " - " + secound);
+        // console.log(totalTime + " - " + secound);
     }, 1000)
 
-    if (totalTime < 10) {
-        totalTime = "0" + totalTime;
-    }
 }
-timeLeft();
 
 
 //submit exam 
@@ -409,7 +432,7 @@ function submitExam() {
     // footerItemElement.style.display = 'none';
 
     const questionDisplay = document.getElementsByClassName("qiz_body")[0];
-    console.log("no more question !");
+    // console.log("no more question !");
     htmlIndex =
         `
     <div class="exam_finished_box">
@@ -422,3 +445,73 @@ function submitExam() {
     `;
     questionDisplay.innerHTML = htmlIndex;
 }
+
+//start exam
+function startExam() {
+    examSetupElement.classList.add('setup_exam_active');
+    // console.log("exam started !");
+    totalMarkElelment.innerHTML = ` Mark:  ${questionLimitation}`;
+    // totalMarkElelment.innerHTML = totalTime + "Min";
+    totalTimeElement.innerHTML =
+        `
+    <img src="img/clock.png" style="padding-right:5px">
+    ${totalTime} Min
+    `;
+
+    init();
+}
+
+//define pass mark to variable
+examPassMark.addEventListener('input', (e) => {
+    // console.log(e.target.value);
+    passMark = e.target.value;
+})
+
+//define question target limitation to valiable
+targetQuestionInputElement.addEventListener('input', (e) => {
+    questionLimitation = parseInt(e.target.value);
+    // console.log(questionLimitation);
+})
+
+//define exam duration to valiable
+examDurationElement.addEventListener('input', (e) => {
+    totalTime = e.target.value;
+    // console.log(totalTime);
+})
+
+negativeMarkInput.addEventListener('input', (e) => {
+    negativeMarking = !negativeMarking;
+    // console.log(negativeMarking);
+})
+selectToNextInput.addEventListener('input', () => {
+    isNestQuestionComesBySelectingOption = !isNestQuestionComesBySelectingOption;
+    console.log(isNestQuestionComesBySelectingOption);
+})
+disabledOptinInput.addEventListener("input", () => {
+    disabledOtherOptionWhenOneOptionIsSelected = !disabledOtherOptionWhenOneOptionIsSelected;
+    // console.log(disabledOtherOptionWhenOneOptionIsSelected);
+})
+
+//function to set input data to valiable 
+function setDataToVariable() {
+    passMark = examPassMark.value;
+    questionLimitation = targetQuestionInputElement.value;
+    totalTime = examDurationElement.value;
+}
+setDataToVariable();
+
+
+// function to generate random number between min and max value
+function getRandomNumberBetweenMinAndMaxValue(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+setInterval(() => {
+    if (window.innerWidth > 800) {
+        document.getElementsByClassName('exam_layout')[0].classList.add('exam_layout_1');
+        document.getElementsByClassName('exam_layout')[0].classList.remove('exam_layout_2');
+    } else {
+        document.getElementsByClassName('exam_layout')[0].classList.remove('exam_layout_1');
+        document.getElementsByClassName('exam_layout')[0].classList.add('exam_layout_2');
+    }
+}, 100);

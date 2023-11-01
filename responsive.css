@@ -1,0 +1,8 @@
+/* small devices */
+@media (max-width:400px) {}
+
+/* medium devices  */
+@media (min-width: 400px) and (max-width:768px) {}
+
+/* large and extra large devices */
+@media (min-width:400px) {}
