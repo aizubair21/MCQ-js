@@ -177,7 +177,7 @@ let totalTime = 10;
 let secound = 60;
 let isExamStarted = false;
 let isNestQuestionComesBySelectingOption = false;
-let disabledOtherOptionWhenOneOptionIsSelected = false;
+let disabledOtherOptionWhenOneOptionIsSelected = true;
 let negativeMarking = false;
 let passMark = 0;
 
@@ -515,3 +515,5 @@ setInterval(() => {
         document.getElementsByClassName('exam_layout')[0].classList.add('exam_layout_2');
     }
 }, 100);
+
+
