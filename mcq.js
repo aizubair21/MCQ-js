@@ -155,7 +155,7 @@ const data = [{
     },
 ]
 const examFormElement = document.getElementsByClassName('exam_form')[0];
-const quizfooterElement = document.getElementsByClassName("qiz_footer")[0];
+const quizfooterElement = document.getElementsByClassName("footer_body")[0];
 const totalMarkElelment = document.getElementsByClassName("total_mark")[0];
 const totalTimeElement = document.getElementsByClassName("total_time")[0];
 const totalLeftTime = document.getElementsByClassName('tm_left')[0];
@@ -553,7 +553,7 @@ function getRandomNumberBetweenMinAndMaxValue(min, max) {
 }
 
 setInterval(() => {
-    if (window.innerWidth > 800) {
+    if (window.innerWidth > 1300) {
         document.getElementsByClassName('exam_layout')[0].classList.add('exam_layout_1');
         document.getElementsByClassName('exam_layout')[0].classList.remove('exam_layout_2');
     } else {

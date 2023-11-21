@@ -6,3 +6,10 @@
 
 /* large and extra large devices */
 @media (min-width:400px) {}
+
+/* until 768 px / */
+@media (max-width:768px) {
+    .timeAndMark {
+        /* display: block !important; */
+    }
+}

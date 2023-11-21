@@ -8,6 +8,7 @@
     <!-- include fontawosome cdn from cdnjs  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     <link rel="stylesheet" href="mcq.css">
+    <link rel="stylesheet" href="responsive.css">
 </head>
 
 <body>
@@ -21,7 +22,6 @@
                 </h2>
                 <span class="span">MCQ </span>
             </div>
-            <button onclick="closeAside()" class='close_btn'><i></i>&times</button>
         </div>
         <div class="hr"></div>
 
@@ -169,6 +169,10 @@
     </section>
 
     <div id="quiz_app">
+        <button onclick="closeAside()" class='close_btn'>
+            <i class="fa-solid fa-align-justify"></i>
+        </button>
+
         <!-- corder element  -->
         <div class="corner_element">
             <div class="corner_item"></div>
@@ -196,6 +200,8 @@
                         <img src="img/clock.png" style="padding-right:5px">
                         60 Min
                     </div>
+
+                    <div class="total_mark">Mark: 60</div>
                 </div>
 
                 <div class="timeAndMark">
@@ -203,7 +209,6 @@
                     <div>
 
                         <div class="left">
-                            <div class="total_mark">Mark: 60</div>
                             <div class="start_time">11:00 AM</div>
                             <div class="end_time">12:00 PM</div>
 
@@ -275,7 +280,8 @@
                         <input type="checkbox" name="" id="ffc_imp">
                         <label for="ffc_imp">I'm sure! want to finished and exit exam.</label>
                     </div>
-                    <button class="button" style="--clr: #00ad54;">
+                    <button onclick="submitExam()" id="ffC_btn" disabled="disabled" class="button"
+                        style="--clr: #00ad54;">
                         <span class="button-decor"></span>
                         <div class="button-content">
                             <div class="button__icon">

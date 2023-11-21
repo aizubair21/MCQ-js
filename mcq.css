@@ -35,14 +35,18 @@ body {
 
     #aside_left {
         background-color: #fff;
-        width: 30%;
+        width: 40%;
         padding: 10px;
         align-self: flex-start;
         border-top-left-radius: 12px;
         border-bottom-left-radius: 12px;
         height: 100%;
-        /* overflow: hidden; */
+        overflow: hidden;
+        transition: all linear .3s;
 
+        .aside_left_hide {
+            margin-left: -100% !important;
+        }
 
         .aside_left-head {
             display: flex;
@@ -279,7 +283,7 @@ body {
 }
 
 #quiz_app {
-    width: 70%;
+    width: 100%;
     height: 100%;
     /* box-shadow: 0px 10px 30px 0px rgba(197, 197, 197, 0.575); */
     /* border: 5px solid gray; */
@@ -298,6 +302,28 @@ body {
     align-items: start;
     overflow: hidden;
     position: relative;
+
+    .close_btn {
+        /* padding: 5px; */
+        position: sticky;
+        top: 10px;
+        left: 10px;
+        font-size: 30px;
+        background-color: inherit;
+        color: #fff;
+        /* border-radius: 50%; */
+        width: 35px;
+        height: 35px;
+        font-weight: 600;
+        cursor: pointer;
+
+        /* on hover  */
+        &:hover {
+            box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+            background-color: lightgray;
+            /* color: black; */
+        }
+    }
 
 
     &::after {
@@ -1037,8 +1063,11 @@ body {
 
         .qiz_footer {
             width: 100% !important;
-            height: 100px;
+            height: 110px;
+            overflow-y: scroll;
         }
+
+       
     }
 
 
