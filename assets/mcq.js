@@ -240,7 +240,7 @@ function generateExam() {
     // }
 
     const questionDisplay = document.getElementsByClassName("qiz_body")[0];
-    console.log("ci : " + typeof currentQuestionIndex + " qi : " + typeof questionLimitation);
+    // console.log("ci : " + typeof currentQuestionIndex + " qi : " + typeof questionLimitation);
 
     if (parseInt(currentQuestionIndex) < parseInt(questionLimitation)) {
 
@@ -290,7 +290,7 @@ function generateExam() {
             document.getElementsByClassName("form_wrapper")[0].classList.add('form_active');
         }, 100);
     } else {
-        console.log(' from create exam else block');
+        // console.log(' from create exam else block');
         submitExam();
     }
 
@@ -553,11 +553,23 @@ function getRandomNumberBetweenMinAndMaxValue(min, max) {
 }
 
 setInterval(() => {
-    if (window.innerWidth > 1300) {
+    if (window.innerWidth < 1300) {
+        asideLeft.classList.add('aside_left_hide');
+        asideLeft.style.marginLeft = -100 + "%";
+        asideLeft.style.transition = "all linear .3s";
+    } else {
+
+        asideLeft.classList.remove('aside_left_hide');
+        asideLeft.style.marginLeft = 0 + '%';
+        asideLeft.style.transition = "all linear .3s";
+    }
+    if (window.innerWidth > 768) {
         document.getElementsByClassName('exam_layout')[0].classList.add('exam_layout_1');
         document.getElementsByClassName('exam_layout')[0].classList.remove('exam_layout_2');
+        document.querySelector("#aside_left").classList.remove('aside_left_hide');
     } else {
         document.getElementsByClassName('exam_layout')[0].classList.remove('exam_layout_1');
         document.getElementsByClassName('exam_layout')[0].classList.add('exam_layout_2');
+        document.querySelector("#aside_left").classList.add('aside_left_hide');
     }
 }, 100);

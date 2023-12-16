@@ -771,7 +771,7 @@ body {
 
         .footer_body {
             /* width: 100%; */
-            padding: 0px 10px;
+            /* padding: 0px 10px; */
             background-color: #fff;
             border-radius: 8px;
             display: inline-flex;
@@ -1019,8 +1019,6 @@ body {
         }
     }
 
-
-
     .exam_layout_1 {
         display: flex;
         align-items: start;
@@ -1043,6 +1041,8 @@ body {
             /* margin-left: 20px; */
             /* overflow-y: scroll; */
             align-self: flex-start;
+            height: 400px;
+            overflow-y: scroll;
         }
 
     }
@@ -1067,7 +1067,7 @@ body {
             overflow-y: scroll;
         }
 
-       
+
     }
 
 

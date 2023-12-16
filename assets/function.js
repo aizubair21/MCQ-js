@@ -15,6 +15,7 @@ leftTabNav[4].classList.add('tab_item_active')
 leftTabNav.forEach((lnav, lindex) => {
     // console.log(lindex);
     lnav.addEventListener('click', () => {
+        
         leftTabNav.forEach((ln, li) => {
             ln.classList.remove('tab_item_active');
             leftTabContent[li].style.display = 'none';
@@ -27,7 +28,7 @@ leftTabNav.forEach((lnav, lindex) => {
 
 //close and open left aside 
 function closeAside() {
-    console.log("function triggered !");
+    // console.log("function triggered !");
     if (asideLeft.classList.contains('aside_left_hide')) {
         asideLeft.classList.remove('aside_left_hide');
         asideLeft.style.marginLeft = 0 + '%';
